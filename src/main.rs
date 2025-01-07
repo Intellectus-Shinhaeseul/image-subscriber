@@ -9,7 +9,7 @@ async fn main() {
         "[year]-[month]-[day] [hour]:[minute]:[second]"
     ));
     tracing_subscriber::fmt()
-        // .with_max_level(tracing::Level::DEBUG)  // DEBUG
+        .with_max_level(tracing::Level::DEBUG)  // DEBUG
         .with_timer(timer)
         .init();
     zenoh::init_log_from_env_or("debug");
@@ -54,7 +54,7 @@ async fn process_subscriber(
                     .payload()
                     .try_to_string()
                     .unwrap_or_else(|e| e.to_string().into());
-                tracing::debug!(
+                tracing::trace!(
                     "[Subscriber] Received {} ('{}')",
                     sample.kind(),
                     sample.key_expr().as_str()
